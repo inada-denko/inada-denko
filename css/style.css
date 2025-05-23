@@ -27,7 +27,12 @@ header h1 {
   margin: 0;
   font-size: 36px;
   font-family: 'Orbitron', sans-serif;
-  text-shadow: 2px 2px 4px #000;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  color: #ffffff;
+}
+
+header p {
+  color: #e0e0e0;
 }
 
 nav {
@@ -64,12 +69,14 @@ nav a:hover {
 .hero h2 {
   font-size: 32px;
   margin-bottom: 10px;
-  text-shadow: 2px 2px 4px #000;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+  color: #ffffff;
 }
 
 .hero p {
   font-size: 18px;
-  text-shadow: 1px 1px 2px #000;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  color: #f5f5f5;
 }
 
 section {
