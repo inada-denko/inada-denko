@@ -25,6 +25,7 @@
       margin: 0;
       font-size: 32px;
       font-family: 'Orbitron', sans-serif;
+      text-shadow: 2px 2px 4px #000;
     }
     nav {
       background: #0074c2;
@@ -32,10 +33,20 @@
       padding: 10px;
     }
     nav a {
-      color: #fff;
-      margin: 0 15px;
+      background-color: #ffffff;
+      color: #0074c2;
+      margin: 5px;
+      padding: 8px 16px;
       text-decoration: none;
       font-weight: bold;
+      border-radius: 5px;
+      display: inline-block;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav a:hover {
+      background-color: #005fa3;
+      color: #fff;
     }
     .hero {
       background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('denko-main-header.png') no-repeat center/cover;
