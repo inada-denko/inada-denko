@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お問い合わせ｜稲田電工</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    body {
-      background: #f7fbff;
-      font-family: 'Helvetica Neue', sans-serif;
-    }
     .container {
       background: #ffffff;
       padding: 30px;
@@ -18,6 +14,10 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.08);
       text-align: center;
+    }
+    .container img {
+      max-width: 120px;
+      margin-bottom: 20px;
     }
     h1, h2, h3 {
       color: #004f91;
@@ -58,9 +58,26 @@
     .button-link:hover {
       background-color: #005fa3;
     }
-    .line-button img {
-      height: 36px;
-      border: 0;
+    nav {
+      background: #0074c2;
+      text-align: center;
+      padding: 10px;
+    }
+    nav a {
+      background-color: #ffffff;
+      color: #0074c2;
+      margin: 5px;
+      padding: 10px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      display: inline-block;
+      box-shadow: 1px 3px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav a:hover {
+      background-color: #005fa3;
+      color: #fff;
     }
   </style>
 </head>
@@ -74,16 +91,12 @@
     <a href="privacy.html">プライバシーポリシー</a>
   </nav>
   <div class="container">
-    <img src="../img/inada-logo.jpeg" alt="稲田電工ロゴ" />
+    <img src="../img/inada-logo.jpeg" alt="稲田電工ロゴ" style="max-width: 120px;" />
     <h1>📩 お問い合わせ・ご予約</h1>
 
     <h2>ご利用方法のご案内</h2>
     <p><strong>個人のお客様</strong>は、LINE公式アカウントからご連絡ください。</p>
-    <div class="line-button">
-      <a href="https://lin.ee/4b92K0B" target="_blank">
-        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加">
-      </a>
-    </div>
+    <a class="button-link" href="https://lin.ee/lEPxWrX" target="_blank">LINEで問い合わせる</a>
 
     <p><strong>法人のお客様</strong>は、以下のメールフォームをご利用ください。</p>
     <a class="button-link" href="mailto:inadadenko@gmail.com?subject=工事のご相談&amp;body=① お名前：%0D%0A② ご住所（市区町村まででOK）：%0D%0A③ ご希望の作業内容：%0D%0A④ ご希望の日時（複数候補を）：%0D%0A" target="_blank">メールで問い合わせる</a>
