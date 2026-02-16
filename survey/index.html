@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稲田電工 顧客満足度アンケート</title>
+    <!-- CSS / Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'M PLUS 1p', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #f0f7ff;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .star-button {
+            transition: transform 0.1s ease;
+        }
+        .star-button:active {
+            transform: scale(0.9);
+        }
+        .submit-button {
+            transition: all 0.2s ease;
+        }
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+        input::placeholder, textarea::placeholder {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Netlify Forms Support (Detect by crawler) -->
+    <form name="satisfaction-survey" data-netlify="true" hidden>
+        <input type="hidden" name="form-name" value="satisfaction-survey" />
+        <input type="hidden" name="rating" />
+        <input type="text" name="name" />
+        <input type="text" name="contact" />
+        <input type="email" name="email" />
+        <textarea name="feedback"></textarea>
+    </form>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- Inline Icons ---
+        const Icons = {
+            Star: ({ fill = "none", className }) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            ),
+            Check: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-white"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            ),
+            MapPin: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ),
+            Send: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            )
+        };
+
+        const GOOGLE_MAPS_URL = "https://g.page/r/CY4xRuMziF2GEAE/review";
+
+        const App = () => {
+            const [step, setStep] = useState('RATING'); // RATING, FEEDBACK, THANK_YOU_HIGH, THANK_YOU_LOW
+            const [rating, setRating] = useState(0);
+            const [hoverRating, setHoverRating] = useState(0);
+            
+            // フォーム入力項目のステート
+            const [formData, setFormData] = useState({
+                name: '',
+                contact: '',
+                email: '',
+                feedback: ''
+            });
+
+            const handleRating = (val) => {
+                setRating(val);
+                if (val >= 4) {
+                    if (window.confetti) window.confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    setStep('THANK_YOU_HIGH');
+                } else {
+                    setStep('FEEDBACK');
+                }
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                
+                // --- Netlify Form Submission (Non-blocking) ---
+                const dataToSubmit = {
+                    "form-name": "satisfaction-survey",
+                    "rating": rating,
+                    ...formData
+                };
+
+                const body = Object.keys(dataToSubmit)
+                    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(dataToSubmit[key]))
+                    .join("&");
+
+                // 送信処理（非同期）
+                fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: body
+                });
+
+                // --- 即座に完了画面へ遷移 ---
+                setStep('THANK_YOU_LOW');
+            };
+
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+            };
+
+            // 1. 評価入力
+            if (step === 'RATING') {
+                return (
+                    <div className="min-h-screen flex flex-col items-center justify-center p-6 animate-fade-in">
+                        <div className="w-full max-w-sm text-center">
+                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-100">
+                                <Icons.Check />
+                            </div>
+                            <h1 className="text-xl font-bold text-blue-900 mb-2 leading-tight">
+                                「次も、あなたに」<br/>そう言っていただけるように。
+                            </h1>
+                            <p className="text-sm text-blue-600 mb-8 font-medium">
+                                稲田電工をご利用いただき、<br/>誠にありがとうございました。
+                            </p>
+
+                            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-blue-50">
+                                <p className="text-sm text-slate-600 mb-8 leading-relaxed">
+                                    お困り事は、解決されましたでしょうか？<br />
+                                    これからも「何かあったら」<br/>
+                                    と安心してお任せいただけるよう、<br/>
+                                    ぜひ率直なご感想をお聞かせください。
+                                </p>
+                                <div className="flex justify-between gap-1 mb-4">
+                                    {[1, 2, 3, 4, 5].map((num) => (
+                                        <button
+                                            key={num}
+                                            onClick={() => handleRating(num)}
+                                            onMouseEnter={() => setHoverRating(num)}
+                                            onMouseLeave={() => setHoverRating(0)}
+                                            className="star-button outline-none"
+                                        >
+                                            <Icons.Star 
+                                                className={`w-12 h-12 ${(hoverRating || rating) >= num ? 'text-amber-400' : 'text-slate-200'}`}
+                                                fill={(hoverRating || rating) >= num ? "currentColor" : "none"}
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                                <p className="text-[10px] text-slate-300 font-bold uppercase tracking-widest mt-4">Tap to rate</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // 2. 改善要望入力 (星1-3)
+            if (step === 'FEEDBACK') {
+                return (
+                    <div className="min-h-screen flex flex-col items-center justify-center p-6 animate-fade-in">
+                        <div className="w-full max-w-md">
+                            <div className="text-center mb-8 px-4">
+                                <h2 className="text-lg font-bold text-slate-800 mb-4 leading-relaxed">
+                                    残念な思いをさせてしまい、<br/>申し訳ありません。
+                                </h2>
+                                <p className="text-blue-700 text-sm font-bold leading-relaxed">
+                                    「次も」と仰っていただけるように、<br/>至らなかった点を教えてください。
+                                </p>
+                            </div>
+                            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-[2.5rem] shadow-xl border border-blue-50 space-y-4">
+                                <input 
+                                    type="text" 
+                                    name="name"
+                                    placeholder="お名前（任意）" 
+                                    className="w-full px-5 py-4 bg-slate-50 rounded-2xl border-0 focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                />
+                                <input 
+                                    type="text" 
+                                    name="contact"
+                                    placeholder="ご連絡先（任意）" 
+                                    className="w-full px-5 py-4 bg-slate-50 rounded-2xl border-0 focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                                    value={formData.contact}
+                                    onChange={handleInputChange}
+                                />
+                                <input 
+                                    type="email" 
+                                    name="email"
+                                    placeholder="メールアドレス（任意）" 
+                                    className="w-full px-5 py-4 bg-slate-50 rounded-2xl border-0 focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                />
+                                <textarea 
+                                    name="feedback"
+                                    className="w-full p-5 bg-slate-50 rounded-2xl border-0 focus:ring-2 focus:ring-blue-400 outline-none text-sm resize-none"
+                                    rows="4"
+                                    placeholder="改善アドバイス（任意）"
+                                    value={formData.feedback}
+                                    onChange={handleInputChange}
+                                ></textarea>
+                                
+                                <button 
+                                    type="submit" 
+                                    className="submit-button w-full bg-blue-600 text-white font-bold py-5 rounded-3xl shadow-lg flex items-center justify-center gap-2"
+                                >
+                                    <Icons.Send />
+                                    改善のご意見箱へ
+                                </button>
+                                <button type="button" onClick={() => setStep('RATING')} className="w-full text-slate-400 text-xs mt-2 hover:underline">評価を選び直す</button>
+                            </form>
+                        </div>
+                    </div>
+                );
+            }
+
+            // 3. 高評価時 (星4-5)
+            if (step === 'THANK_YOU_HIGH') {
+                return (
+                    <div className="min-h-screen flex flex-col items-center justify-center p-6 animate-fade-in text-center">
+                        <div className="w-full max-w-md">
+                            <h2 className="text-xl font-bold text-blue-900 mb-8 leading-tight">
+                                「次も、また頼もう。」<br/>
+                                そう思っていただけることが、<br/>
+                                とって何よりの励みです。
+                            </h2>
+                            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-blue-50 mb-8">
+                                <p className="text-sm text-slate-600 mb-8 font-medium leading-relaxed">
+                                    温かいご評価をありがとうございます。<br/>
+                                    よろしければ、Googleマップでも<br/>感想を教えていただけませんか？
+                                </p>
+                                <a 
+                                    href={GOOGLE_MAPS_URL} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="submit-button w-full bg-blue-600 text-white font-bold py-5 rounded-3xl shadow-lg flex items-center justify-center gap-2 no-underline"
+                                >
+                                    <Icons.MapPin />
+                                    Googleマップに投稿する
+                                </a>
+                            </div>
+                            <button onClick={() => setStep('RATING')} className="text-slate-400 text-sm hover:underline">戻る</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            // 4. 送信完了 (星1-3後)
+            if (step === 'THANK_YOU_LOW') {
+                return (
+                    <div className="min-h-screen flex flex-col items-center justify-center p-6 animate-fade-in text-center">
+                        <div className="w-full max-w-md">
+                            <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-blue-50 mb-8">
+                                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8">
+                                    <Icons.Send className="text-blue-500" />
+                                </div>
+                                <h3 className="text-lg font-bold text-slate-800 leading-relaxed mb-4">
+                                    貴重なアドバイスを<br/>ありがとうございます。
+                                </h3>
+                                <p className="text-sm text-slate-500 leading-relaxed">
+                                    内容を確認して<br/>改善に努めさせていただきます。
+                                </p>
+                            </div>
+                            <button onClick={() => setStep('RATING')} className="text-slate-400 text-sm hover:underline">トップへ戻る</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return null;
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
