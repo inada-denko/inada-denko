@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import ceoPhoto from './assets/ceo.jpg'
 import {
   Zap, Menu, X, Phone, Mail, MessageSquare, Users, Brain,
   Shield, CheckCircle, ArrowRight, Car, Building, Send,
@@ -503,8 +504,8 @@ export default function App() {
           {/* Quick contact */}
           <div className="mt-6 grid sm:grid-cols-2 gap-3">
             {[
-              { icon: <Phone size={20} />, label: '電話でのお問い合わせ', value: '080-xxxx-xxxx', href: 'tel:080xxxxxxxx' },
-              { icon: <Mail size={20} />, label: 'メールでのお問い合わせ', value: 'inada@inada-denko.com', href: 'mailto:inada@inada-denko.com' },
+              { icon: <MessageSquare size={20} />, label: 'LINEでのお問い合わせ', value: 'LINE公式アカウント', href: 'https://lin.ee/lEPxWrX' },
+              { icon: <Mail size={20} />, label: 'メールでのお問い合わせ', value: 'inadadenko@gmail.com', href: 'mailto:inadadenko@gmail.com' },
             ].map(c => (
               <a key={c.label} href={c.href}
                  style={{ background: navy, border: `1px solid ${navyM}` }}
@@ -533,11 +534,10 @@ export default function App() {
           <div style={{ background: navyL, border: `1px solid ${navyM}` }}
                className="rounded-2xl p-8 md:p-12">
             <div className="flex flex-col md:flex-row gap-8 items-start">
-              {/* Avatar placeholder */}
-              <div style={{ background: navyM, border: '2px solid rgba(255,215,0,0.4)' }}
-                   className="w-36 h-36 rounded-2xl flex-shrink-0 flex items-center justify-center text-5xl mx-auto md:mx-0">
-                👷
-              </div>
+              {/* CEO photo */}
+              <img src={ceoPhoto} alt="稲田輝吉"
+                   style={{ border: '2px solid rgba(255,215,0,0.4)' }}
+                   className="w-36 h-36 rounded-2xl flex-shrink-0 object-cover object-top mx-auto md:mx-0" />
 
               <div className="flex-1">
                 <span style={{ color: yellow }} className="text-xs font-bold">稲田電工 代表</span>
@@ -576,7 +576,7 @@ export default function App() {
             <span className="font-black tracking-widest">稲田電工</span>
           </div>
           <div style={{ color: gray }} className="text-xs text-center">
-            兵庫県姫路市｜TEL: 080-xxxx-xxxx｜inada@inada-denko.com
+            兵庫県姫路市｜inadadenko@gmail.com
           </div>
           <div style={{ color: gray }} className="text-xs">© 2026 稲田電工</div>
         </div>
