@@ -104,6 +104,7 @@ export default function App() {
 
   const navLinks = [
     ['対応工事', '#services'],
+    ['施工実績', '#works'],
     ['体制図',   '#team'],
     ['番頭おさむ', '#contact'],
     ['代表',     '#ceo'],
@@ -294,6 +295,121 @@ export default function App() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ WORKS ══ */}
+      <section id="works" style={{ background: navyL }} className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <span style={{ color: yellow }} className="text-xs font-bold tracking-widest uppercase">
+              Construction Records
+            </span>
+            <h2 className="text-4xl font-black mt-2">施工実績</h2>
+            <p style={{ color: grayL }} className="mt-3 text-base">
+              兵庫・播磨エリアを中心に200件以上の施工実績。代表が全案件を直接担当。
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              {
+                cat: 'EV充電設備',
+                title: 'マンション共用部 EV充電器設置',
+                location: '姫路市',
+                price: '¥180,000',
+                tags: ['200V専用回路', '普通充電器', '管理組合対応'],
+                note: '既設幹線から分岐・ブレーカー増設・充電器3口設置。管理組合の手続き書類も代行。',
+              },
+              {
+                cat: '幹線・分電盤',
+                title: '戸建住宅 幹線引き直し＋分電盤交換',
+                location: '加古川市',
+                price: '¥220,000',
+                tags: ['40A→60A増設', 'スマートメーター', '漏電遮断器'],
+                note: '築35年の住宅。老朽化した幹線を全交換し、スマートメーター対応の分電盤に更新。停電時間は午前中のみ。',
+              },
+              {
+                cat: '店舗改修',
+                title: '飲食店開業 電気設備一式',
+                location: '神戸市西区',
+                price: '¥380,000',
+                tags: ['厨房電源', '照明設計', 'エアコン回路'],
+                note: 'テナント入居に合わせ全体設計。厨房用200V・エアコン専用回路・照明計画まで一括コーディネート。',
+              },
+              {
+                cat: '照明工事',
+                title: '倉庫・工場 照明LED一括更新',
+                location: '姫路市',
+                price: '¥91,200〜',
+                tags: ['LED化', '照明58台', '運搬・設置'],
+                note: '既存蛍光灯58台をLEDに交換。作業は2日間で完了。電気代の大幅削減を実現。',
+              },
+              {
+                cat: '漏電・安全対策',
+                title: '動力設備 漏電遮断器取替工事',
+                location: '加古川市',
+                price: '¥88,000',
+                tags: ['ELB取替', '保安協会対応', '停電最小化'],
+                note: '保安協会の指摘を受け即対応。動力系統のみ停電で、エアコン・溶接機への影響を最小化して施工。',
+              },
+              {
+                cat: '防犯・セキュリティ',
+                title: '戸建 防犯カメラ2台設置工事',
+                location: '高砂市',
+                price: '¥100,000〜',
+                tags: ['TP-Link VIGI', '夜間フルカラー', 'スマホ監視'],
+                note: 'メーターポール側・カーポート側の2箇所に設置。電源工事・配管・設定・アフターまで一括対応。',
+              },
+            ].map(w => (
+              <div key={w.title}
+                   style={{ background: navy, border: `1px solid ${navyM}` }}
+                   className="rounded-2xl p-6 hover:border-yellow-400 transition-all">
+                <div className="flex items-center justify-between mb-3">
+                  <span style={{ background: 'rgba(255,215,0,0.1)', color: yellow, border: '1px solid rgba(255,215,0,0.25)' }}
+                        className="text-xs px-2 py-0.5 rounded font-bold">
+                    {w.cat}
+                  </span>
+                  <span style={{ color: gray }} className="text-xs">{w.location}</span>
+                </div>
+                <h3 className="font-bold text-sm mb-2 leading-snug">{w.title}</h3>
+                <p style={{ color: grayL }} className="text-xs leading-relaxed mb-4">{w.note}</p>
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {w.tags.map(t => (
+                    <span key={t}
+                          style={{ background: 'rgba(255,255,255,0.05)', color: grayL, border: `1px solid ${navyM}` }}
+                          className="text-xs px-2 py-0.5 rounded">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ borderTop: `1px solid ${navyM}`, color: yellow }}
+                     className="pt-3 text-sm font-bold">
+                  施工金額: {w.price}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 実績数バナー */}
+          <div style={{ background: navy, border: `1px solid rgba(255,215,0,0.3)` }}
+               className="rounded-2xl p-8 text-center">
+            <p style={{ color: grayL }} className="text-sm mb-6">
+              掲載は一部です。業種・工事規模・ご予算に応じてご相談ください。
+            </p>
+            <div className="grid grid-cols-3 gap-6 max-w-sm mx-auto mb-6">
+              {[['200+', '累計施工件数'], ['15年+', '現場経験'], ['兵庫全域', '対応エリア']].map(([n, l]) => (
+                <div key={l}>
+                  <div style={{ color: yellow }} className="text-2xl font-black">{n}</div>
+                  <div style={{ color: gray }} className="text-xs mt-1">{l}</div>
+                </div>
+              ))}
+            </div>
+            <a href="#contact" style={{ background: yellow, color: navy }}
+               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-black text-sm hover:brightness-110 transition-all">
+              <MessageSquare size={16} /> 施工事例の詳細を相談する
+            </a>
           </div>
         </div>
       </section>
