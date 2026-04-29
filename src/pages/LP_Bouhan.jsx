@@ -2,7 +2,7 @@ import { Shield, CheckCircle, ArrowRight, ChevronDown } from 'lucide-react'
 import NavBar        from '../components/NavBar'
 import Footer        from '../components/Footer'
 import LineFloat     from '../components/LineFloat'
-import PhotoEstimate from '../components/PhotoEstimate'
+import PhotoGuideCards from '../components/PhotoGuideCards'
 import { navy, navyL, navyM, yellow, gray, grayL, LINE_URL } from '../theme'
 
 const photos = [
@@ -108,8 +108,8 @@ export default function LP_Bouhan() {
         </div>
       </section>
 
-      {/* PHOTO ESTIMATE */}
-      <PhotoEstimate photos={photos} />
+      {/* PHOTO GUIDE */}
+      <PhotoGuideCards service="bouhan" />
 
       {/* FAQ */}
       <section style={{ background: navyL }} className="py-20 px-4">
