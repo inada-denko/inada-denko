@@ -3,6 +3,7 @@ import NavBar        from '../components/NavBar'
 import Footer        from '../components/Footer'
 import LineFloat     from '../components/LineFloat'
 import PhotoGuideCards from '../components/PhotoGuideCards'
+import Seo            from '../components/Seo'
 import { navy, navyL, navyM, yellow, gray, grayL, LINE_URL } from '../theme'
 
 const photos = [
@@ -21,6 +22,8 @@ const faqs = [
 export default function LP_Aircon() {
   return (
     <div style={{ background: navy, color: '#fff', fontFamily: '"Noto Sans JP", sans-serif', minHeight: '100vh' }}>
+      <Seo title="エアコン工事｜写真3枚で見積もり・翌日施工対応｜稲田電工（播磨エリア）"
+           description="現地調査不要、LINEで写真3枚を送るだけで見積もり完了。施主支給品の取り付け・隠蔽配管・難工事も対応。加古川・姫路・明石・神戸市西区で最短翌日施工。" />
       <NavBar />
 
       {/* HERO */}

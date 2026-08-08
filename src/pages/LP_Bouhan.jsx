@@ -3,6 +3,7 @@ import NavBar        from '../components/NavBar'
 import Footer        from '../components/Footer'
 import LineFloat     from '../components/LineFloat'
 import PhotoGuideCards from '../components/PhotoGuideCards'
+import Seo            from '../components/Seo'
 import { navy, navyL, navyM, yellow, gray, grayL, LINE_URL } from '../theme'
 
 const photos = [
@@ -21,6 +22,8 @@ const faqs = [
 export default function LP_Bouhan() {
   return (
     <div style={{ background: navy, color: '#fff', fontFamily: '"Noto Sans JP", sans-serif', minHeight: '100vh' }}>
+      <Seo title="防犯カメラ工事｜侵入経路まで考えたセキュリティ設計｜稲田電工（播磨エリア）"
+           description="「とりあえず設置」ではなく侵入経路・死角・照明条件を分析した防犯カメラ設計。写真3枚をLINEで送るだけで見積もり、最短翌日施工。加古川・姫路・明石・神戸市西区対応。" />
       <NavBar />
 
       {/* HERO */}

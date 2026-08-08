@@ -4,6 +4,7 @@ import NavBar    from '../components/NavBar'
 import Footer    from '../components/Footer'
 import LineFloat from '../components/LineFloat'
 import OsamuChat from '../components/OsamuChat'
+import Seo       from '../components/Seo'
 import ceoPhoto  from '../assets/ceo.jpg'
 import { navy, navyL, navyM, yellow, gray, grayL, LINE_URL, COMPANY } from '../theme'
 
@@ -45,6 +46,8 @@ const services = [
 export default function Home() {
   return (
     <div style={{ background: navy, color: '#fff', fontFamily: '"Noto Sans JP", sans-serif', minHeight: '100vh' }}>
+      <Seo title="稲田電工｜AI×電工 現場の司令塔"
+           description="稲田電工｜EV充電設備・幹線工事・店舗改修。AI×電工で兵庫の電気工事を最速解決。" />
       <NavBar />
 
       {/* HERO */}

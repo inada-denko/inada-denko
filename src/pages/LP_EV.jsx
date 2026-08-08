@@ -3,6 +3,7 @@ import NavBar        from '../components/NavBar'
 import Footer        from '../components/Footer'
 import LineFloat     from '../components/LineFloat'
 import PhotoGuideCards from '../components/PhotoGuideCards'
+import Seo            from '../components/Seo'
 import { navy, navyL, navyM, yellow, gray, grayL, LINE_URL, COMPANY } from '../theme'
 
 const photos = [
@@ -21,6 +22,8 @@ const faqs = [
 export default function LP_EV() {
   return (
     <div style={{ background: navy, color: '#fff', fontFamily: '"Noto Sans JP", sans-serif', minHeight: '100vh' }}>
+      <Seo title="EV充電コンセント工事｜第一種電気工事士対応・写真3枚で見積もり｜稲田電工（播磨エリア）"
+           description="テスラ・日産リーフなど全EV対応。第一種電気工事士がCEV補助金申請までサポート。写真3枚をLINEで送るだけで見積もり完了。加古川・姫路・明石・神戸市西区。" />
       <NavBar />
 
       {/* HERO */}

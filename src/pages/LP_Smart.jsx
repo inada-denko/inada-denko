@@ -3,6 +3,7 @@ import NavBar        from '../components/NavBar'
 import Footer        from '../components/Footer'
 import LineFloat     from '../components/LineFloat'
 import PhotoGuideCards from '../components/PhotoGuideCards'
+import Seo            from '../components/Seo'
 import { navy, navyL, navyM, yellow, gray, grayL, LINE_URL } from '../theme'
 
 const photos = [
@@ -28,6 +29,8 @@ const examples = [
 export default function LP_Smart() {
   return (
     <div style={{ background: navy, color: '#fff', fontFamily: '"Noto Sans JP", sans-serif', minHeight: '100vh' }}>
+      <Seo title="シャッターリモコン化・LED化・スマート設備交換｜稲田電工（播磨エリア）"
+           description="手動シャッターのリモコン化、LED全灯化、IH・浴室乾燥機交換、スマホ連携照明まで対応。写真3枚をLINEで送るだけで見積もり完了。加古川・姫路・明石・神戸市西区。" />
       <NavBar />
 
       {/* HERO */}
